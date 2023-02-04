@@ -2,10 +2,27 @@ import Head from 'next/head';
 import Image from 'next/image';
 import { Inter } from '@next/font/google';
 import styles from '@/styles/Home.module.css';
-
+import useSwr from 'swr';
 const inter = Inter({ subsets: ['latin'] });
+import Test from '@/components/Test';
+import NewTest from '@/components/NewTest';
+
+const fetcher = (url: string) => fetch(url).then((res) => res.json());
 
 export default function Home() {
+  // const {data, error, isLoading } => useSwr<{name: string}[]/>('/api/hello', fetcher)
+  // if (error) return <div>Failed to load</div>
+  // if (isLoading) return <div>Loading...</div>
+  // if (!data) return null
+  type Quantity = 50 | 100;
+  let quantity: Quantity = 100;
+
+  function greet(name: string | null) {
+    if (name) console.log(name.toUpperCase());
+    else console.log('Hola');
+  }
+  greet(null);
+
   let sales = 123_456_789;
   let course: string = 'TypeScript';
   let is_published: boolean = true;
@@ -32,13 +49,23 @@ export default function Home() {
 
   // console.log(Size);
 
-  // Question mark is optional
+  // Question mark is optional variable
   function calculateTax(income: number, taxYear = 2022): number {
     if (taxYear <= 2022) return income * 1.2;
     return income * 1.3;
   }
-
-  console.log(calculateTax(10_000));
+  // readonly cant be over written
+  let employee: {
+    readonly id: number;
+    name: string;
+    retire: (date: Date) => void;
+  } = {
+    id: 1,
+    name: 'Oscar',
+    retire: (date: Date) => {
+      console.log(date);
+    },
+  };
 
   return (
     <>
@@ -55,7 +82,10 @@ export default function Home() {
         <link rel="icon" href="/favicon.ico" />
       </Head>
       <main className={styles.main}>
-        <div className={styles.description}></div>
+        <div className={styles.description}>
+          <Test title={'Hello world'} subtitle={'Its me'} />
+          <NewTest name="Oscar" age={12} />
+        </div>
       </main>
     </>
   );
