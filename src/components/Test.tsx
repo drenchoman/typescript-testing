@@ -10,7 +10,7 @@ export default function Test({ title, subtitle }: Props) {
   async function fetcher() {
     const res = await fetch('/api/hello');
     const data = await res.json();
-    setPerson(data.name);
+    setPerson(data.name2);
   }
   fetcher();
   return (
